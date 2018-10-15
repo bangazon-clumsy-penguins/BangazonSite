@@ -51,6 +51,7 @@ namespace Bangazon.Data
 
             ApplicationUser user = new ApplicationUser
             {
+                Id = Guid.NewGuid().ToString(),   
                 FirstName = "admin",
                 LastName = "admin",
                 StreetAddress = "123 Infinity Way",
@@ -58,6 +59,7 @@ namespace Bangazon.Data
                 NormalizedUserName = "ADMIN@ADMIN.COM",
                 Email = "admin@admin.com",
                 NormalizedEmail = "ADMIN@ADMIN.COM",
+                City = "Poop",
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 SecurityStamp = Guid.NewGuid().ToString("D")
@@ -65,6 +67,7 @@ namespace Bangazon.Data
 
             ApplicationUser user2 = new ApplicationUser
             {
+                Id = Guid.NewGuid().ToString(),
                 FirstName = "April",
                 LastName = "AwesomeLastName",
                 StreetAddress = "123 New Way",
@@ -72,6 +75,7 @@ namespace Bangazon.Data
                 NormalizedUserName = "LADYFACE@FACES.COM",
                 Email = "ladyface@faces.com",
                 NormalizedEmail = "LADYFACE@FACES.COM",
+                City = "Poop Town",
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 SecurityStamp = Guid.NewGuid().ToString("D")
@@ -82,7 +86,7 @@ namespace Bangazon.Data
             modelBuilder.Entity<ApplicationUser>().HasData(user);
 
             var passwordHash2 = new PasswordHasher<ApplicationUser>();
-            user2.PasswordHash = passwordHash2.HashPassword(user2, "Admin8*");
+            user2.PasswordHash = passwordHash2.HashPassword(user2, "Admin8!");
             modelBuilder.Entity<ApplicationUser>().HasData(user2);
 
 
@@ -110,30 +114,30 @@ namespace Bangazon.Data
                 Label = "Adams socks"
             };
 
-            modelBuilder.Entity<ApplicationUser>().HasData(ProductType1);
-            modelBuilder.Entity<ApplicationUser>().HasData(ProductType2);
-            modelBuilder.Entity<ApplicationUser>().HasData(ProductType3);
-            modelBuilder.Entity<ApplicationUser>().HasData(ProductType4);
+            modelBuilder.Entity<ProductType>().HasData(ProductType1);
+            modelBuilder.Entity<ProductType>().HasData(ProductType2);
+            modelBuilder.Entity<ProductType>().HasData(ProductType3);
+            modelBuilder.Entity<ProductType>().HasData(ProductType4);
 
 
             modelBuilder.Entity<PaymentType> ().HasData (
                 new PaymentType() {
                     PaymentTypeId = 1,
-                    UserId = user.Id,
+                    ApplicationUserId = user.Id,
                     Description = "American Express",
                     AccountNumber = "86753095551212"
                 },
                 new PaymentType()
                 {
                     PaymentTypeId = 2,
-                    UserId = user.Id,
+                    ApplicationUserId = user.Id,
                     Description = "Discover",
                     AccountNumber = "4102948572991"
                 },
                 new PaymentType()
                 {
                     PaymentTypeId = 3,
-                    UserId = user2.Id,
+                    ApplicationUserId = user2.Id,
                     Description = "Discover",
                     AccountNumber = "9992948572991"
                 }
@@ -145,43 +149,41 @@ namespace Bangazon.Data
                     OrderId = 1,
                     DateCreated = new DateTime(2018, 9, 01),
                     DateCompleted = new DateTime(2018, 10, 01),
-                    User = user,
-                    PaymentTypeId = 1,
+                    ApplicationUserId = user.Id,
+                    PaymentTypeId = 1
                 },
                 new Order()
                 {
                     OrderId = 2,
                     DateCreated = new DateTime(2017, 3, 01),
                     DateCompleted = new DateTime(2018, 10, 01),
-                    User = user2,
-                    PaymentTypeId = 3,
+                    ApplicationUserId = user2.Id,
+                    PaymentTypeId = 3
                 },
                 new Order()
                 {
                     OrderId = 3,
                     DateCreated = new DateTime(2016, 9, 01),
                     DateCompleted = new DateTime(2017, 10, 01),
-                    User = user,
-                    PaymentTypeId = 2,
+                    ApplicationUserId = user.Id,
+                    PaymentTypeId = 2
                 },
                 new Order()
                 {
                     OrderId = 4,
                     DateCreated = new DateTime(2018, 9, 01),
                     DateCompleted = null,
-                    User = user2,
-                    PaymentTypeId = null,
+                    ApplicationUserId = user2.Id,
+                    PaymentTypeId = null
                 },
                 new Order()
                 {
                     OrderId = 5,
                     DateCreated = new DateTime(2018, 10, 2),
                     DateCompleted = null,
-                    User = user,
-                    PaymentTypeId = null,
+                    ApplicationUserId = user.Id,
+                    PaymentTypeId = null
                 }
-
-
             );
 
             modelBuilder.Entity<OrderProduct>().HasData(
@@ -234,7 +236,7 @@ namespace Bangazon.Data
                 Description = "Description of product 1",
                 Title = "Product 1",
                 Price = 10.00,
-                User = user,
+                ApplicationUserId = user.Id,
                 ProductTypeId = 1,
                 Quantity = 3
             };
@@ -245,7 +247,7 @@ namespace Bangazon.Data
                 Description = "Description of product 2",
                 Title = "Product 2",
                 Price = 20.00,
-                User = user,
+                ApplicationUserId = user.Id,
                 ProductTypeId = 2,
                 Quantity = 123
             };
@@ -256,7 +258,7 @@ namespace Bangazon.Data
                 Description = "Description of product 3",
                 Title = "Product 3",
                 Price = 30.00,
-                User = user,
+                ApplicationUserId = user.Id,
                 ProductTypeId = 3,
                 Quantity = 754
             };
@@ -267,7 +269,7 @@ namespace Bangazon.Data
                 Description = "Description of product 4",
                 Title = "Product 4",
                 Price = 10.00,
-                User = user,
+                ApplicationUserId = user.Id,
                 ProductTypeId = 4,
                 Quantity = 5
             };
@@ -278,7 +280,7 @@ namespace Bangazon.Data
                 Description = "Description of product 5",
                 Title = "Product 5",
                 Price = 50.00,
-                User = user,
+                ApplicationUserId = user.Id,
                 ProductTypeId = 1,
                 Quantity = 34
             };
@@ -289,7 +291,7 @@ namespace Bangazon.Data
                 Description = "Description of product 6",
                 Title = "Product 6",
                 Price = 60.00,
-                User = user,
+                ApplicationUserId = user2.Id,
                 ProductTypeId = 2,
                 Quantity = 87
             };
@@ -300,7 +302,7 @@ namespace Bangazon.Data
                 Description = "Description of product 7",
                 Title = "Product 7",
                 Price = 70.00,
-                User = user,
+                ApplicationUserId = user2.Id,
                 ProductTypeId = 3,
                 Quantity = 7
             };
@@ -311,7 +313,7 @@ namespace Bangazon.Data
                 Description = "Description of product 8",
                 Title = "Product 8",
                 Price = 80.00,
-                User = user,
+                ApplicationUserId = user2.Id,
                 ProductTypeId = 4,
                 Quantity = 10
             };

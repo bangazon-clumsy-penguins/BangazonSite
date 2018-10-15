@@ -29,8 +29,10 @@ namespace Bangazon.Models
 
     public int Quantity { get; set; }
 
+    public string ApplicationUserId { get; set; }
+
     [Required]
-    public ApplicationUser User { get; set; }
+    public ApplicationUser ApplicationUser { get; set; }
 
     [Required]
     [Display(Name="Product Category")]

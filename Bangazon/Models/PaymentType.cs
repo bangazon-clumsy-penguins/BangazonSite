@@ -17,7 +17,7 @@ namespace Bangazon.Models
     public DateTime DateCreated { get; set; }
 
     [Required]
-    [StringLength(12)]
+    [StringLength(20)]
     public string Description { get; set; }
 
     [Required]
@@ -25,10 +25,10 @@ namespace Bangazon.Models
     public string AccountNumber { get; set; }
 
     [Required]
-    public string UserId {get; set;}
+    public string ApplicationUserId {get; set;}
 
     [Required]
-    public ApplicationUser User { get; set; }
+    public ApplicationUser ApplicationUser { get; set; }
 
     public ICollection<Order> Orders { get; set; }
   }
