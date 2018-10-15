@@ -136,6 +136,7 @@ namespace Bangazon.Data {
 
             Product product1 = new Product()
             {
+                ProductId = 1,
                 Description = "Description of product 1",
                 Title = "Product 1",
                 Price = 10.00,
@@ -146,6 +147,7 @@ namespace Bangazon.Data {
 
             Product product2 = new Product()
             {
+                ProductId = 2,
                 Description = "Description of product 2",
                 Title = "Product 2",
                 Price = 20.00,
@@ -156,6 +158,7 @@ namespace Bangazon.Data {
 
             Product product3 = new Product()
             {
+                ProductId = 3,
                 Description = "Description of product 3",
                 Title = "Product 3",
                 Price = 30.00,
@@ -166,6 +169,7 @@ namespace Bangazon.Data {
 
             Product product4 = new Product()
             {
+                ProductId = 4,
                 Description = "Description of product 4",
                 Title = "Product 4",
                 Price = 10.00,
@@ -176,6 +180,7 @@ namespace Bangazon.Data {
 
             Product product5 = new Product()
             {
+                ProductId = 5,
                 Description = "Description of product 5",
                 Title = "Product 5",
                 Price = 50.00,
@@ -186,6 +191,7 @@ namespace Bangazon.Data {
 
             Product product6 = new Product()
             {
+                ProductId = 6,
                 Description = "Description of product 6",
                 Title = "Product 6",
                 Price = 60.00,
@@ -196,6 +202,7 @@ namespace Bangazon.Data {
 
             Product product7 = new Product()
             {
+                ProductId = 7,
                 Description = "Description of product 7",
                 Title = "Product 7",
                 Price = 70.00,
@@ -206,6 +213,7 @@ namespace Bangazon.Data {
 
             Product product8 = new Product()
             {
+                ProductId = 8,
                 Description = "Description of product 8",
                 Title = "Product 8",
                 Price = 80.00,
