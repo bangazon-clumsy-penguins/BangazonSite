@@ -78,7 +78,7 @@ namespace Bangazon.Data {
             modelBuilder.Entity<ApplicationUser> ().HasData (user);
 
             var passwordHash2 = new PasswordHasher<ApplicationUser>();
-            user2.PasswordHash = passwordHash.HashPassword(user2, "Admin8*");
+            user2.PasswordHash = passwordHash2.HashPassword(user2, "Admin8*");
             modelBuilder.Entity<ApplicationUser>().HasData(user2);
 
 
@@ -141,7 +141,7 @@ namespace Bangazon.Data {
                 Price = 10.00,
                 User = user,
                 ProductTypeId = 1,
-                ProductType = ProductType1
+                Quantity = 3
             };
 
             Product product2 = new Product()
@@ -151,7 +151,7 @@ namespace Bangazon.Data {
                 Price = 20.00,
                 User = user,
                 ProductTypeId = 2,
-                ProductType = ProductType2
+                Quantity = 123
             };
 
             Product product3 = new Product()
@@ -161,7 +161,7 @@ namespace Bangazon.Data {
                 Price = 30.00,
                 User = user,
                 ProductTypeId = 3,
-                ProductType = ProductType3
+                Quantity = 754
             };
 
             Product product4 = new Product()
@@ -171,7 +171,7 @@ namespace Bangazon.Data {
                 Price = 10.00,
                 User = user,
                 ProductTypeId = 4,
-                ProductType = ProductType4
+                Quantity = 5
             };
 
             Product product5 = new Product()
@@ -181,7 +181,7 @@ namespace Bangazon.Data {
                 Price = 50.00,
                 User = user,
                 ProductTypeId = 1,
-                ProductType = ProductType1
+                Quantity = 34
             };
 
             Product product6 = new Product()
@@ -191,7 +191,7 @@ namespace Bangazon.Data {
                 Price = 60.00,
                 User = user,
                 ProductTypeId = 2,
-                ProductType = ProductType2
+                Quantity = 87
             };
 
             Product product7 = new Product()
@@ -201,7 +201,7 @@ namespace Bangazon.Data {
                 Price = 70.00,
                 User = user,
                 ProductTypeId = 3,
-                ProductType = ProductType3
+                Quantity = 7
             };
 
             Product product8 = new Product()
@@ -211,7 +211,7 @@ namespace Bangazon.Data {
                 Price = 80.00,
                 User = user,
                 ProductTypeId = 4,
-                ProductType = ProductType4
+                Quantity = 10
             };
 
             modelBuilder.Entity<Product>().HasData(product1);
