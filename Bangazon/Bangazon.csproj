@@ -6,6 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20181015183658_omgWork.cs" />
+    <Compile Remove="Migrations\20181015183658_omgWork.Designer.cs" />
+    <Compile Remove="Migrations\20181015184432_take2.cs" />
+    <Compile Remove="Migrations\20181015184432_take2.Designer.cs" />
+    <Compile Remove="Migrations\20181015184724_productTypes.cs" />
+    <Compile Remove="Migrations\20181015184724_productTypes.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
