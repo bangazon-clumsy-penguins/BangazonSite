@@ -81,6 +81,37 @@ namespace Bangazon.Data {
             user2.PasswordHash = passwordHash.HashPassword(user2, "Admin8*");
             modelBuilder.Entity<ApplicationUser>().HasData(user2);
 
+
+            ProductType ProductType1 = new ProductType()
+            {
+                ProductTypeId = 1,
+                Label = "Food"
+            };
+
+            ProductType ProductType2 = new ProductType()
+            {
+                ProductTypeId = 2,
+                Label = "Apple"
+            };
+
+            ProductType ProductType3 = new ProductType()
+            {
+                ProductTypeId = 3,
+                Label = "Phils SQL Training"
+            };
+
+            ProductType ProductType4 = new ProductType()
+            {
+                ProductTypeId = 4,
+                Label = "Adams socks"
+            };
+
+            modelBuilder.Entity<ApplicationUser>().HasData(ProductType1);
+            modelBuilder.Entity<ApplicationUser>().HasData(ProductType2);
+            modelBuilder.Entity<ApplicationUser>().HasData(ProductType3);
+            modelBuilder.Entity<ApplicationUser>().HasData(ProductType4);
+
+
             modelBuilder.Entity<PaymentType> ().HasData (
                 new PaymentType() {
                     PaymentTypeId = 1,
