@@ -25,8 +25,9 @@ namespace Bangazon.Models
 
     [Required]
     [DisplayFormat(DataFormatString = "{0:C}")]
-    [NonLuxuryProduct]
     public double Price { get; set; }
+
+    public int Quantity { get; set; }
 
     [Required]
     public ApplicationUser User { get; set; }
