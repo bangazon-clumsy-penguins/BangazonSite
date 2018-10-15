@@ -103,6 +103,94 @@ namespace Bangazon.Data {
                 }
             );
 
+            Product product1 = new Product()
+            {
+                Description = "Description of product 1",
+                Title = "Product 1",
+                Price = 10.00,
+                User = user,
+                ProductTypeId = 1,
+                ProductType = ProductType1
+            };
+
+            Product product2 = new Product()
+            {
+                Description = "Description of product 2",
+                Title = "Product 2",
+                Price = 20.00,
+                User = user,
+                ProductTypeId = 2,
+                ProductType = ProductType2
+            };
+
+            Product product3 = new Product()
+            {
+                Description = "Description of product 3",
+                Title = "Product 3",
+                Price = 30.00,
+                User = user,
+                ProductTypeId = 3,
+                ProductType = ProductType3
+            };
+
+            Product product4 = new Product()
+            {
+                Description = "Description of product 4",
+                Title = "Product 4",
+                Price = 10.00,
+                User = user,
+                ProductTypeId = 4,
+                ProductType = ProductType4
+            };
+
+            Product product5 = new Product()
+            {
+                Description = "Description of product 5",
+                Title = "Product 5",
+                Price = 50.00,
+                User = user,
+                ProductTypeId = 1,
+                ProductType = ProductType1
+            };
+
+            Product product6 = new Product()
+            {
+                Description = "Description of product 6",
+                Title = "Product 6",
+                Price = 60.00,
+                User = user,
+                ProductTypeId = 2,
+                ProductType = ProductType2
+            };
+
+            Product product7 = new Product()
+            {
+                Description = "Description of product 7",
+                Title = "Product 7",
+                Price = 70.00,
+                User = user,
+                ProductTypeId = 3,
+                ProductType = ProductType3
+            };
+
+            Product product8 = new Product()
+            {
+                Description = "Description of product 8",
+                Title = "Product 8",
+                Price = 80.00,
+                User = user,
+                ProductTypeId = 4,
+                ProductType = ProductType4
+            };
+
+            modelBuilder.Entity<Product>().HasData(product1);
+            modelBuilder.Entity<Product>().HasData(product2);
+            modelBuilder.Entity<Product>().HasData(product3);
+            modelBuilder.Entity<Product>().HasData(product4);
+            modelBuilder.Entity<Product>().HasData(product5);
+            modelBuilder.Entity<Product>().HasData(product6);
+            modelBuilder.Entity<Product>().HasData(product7);
+            modelBuilder.Entity<Product>().HasData(product8);
 
         }
     }
