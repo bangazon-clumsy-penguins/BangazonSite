@@ -5,7 +5,7 @@
             @foreach (var item in Model.GroupedProducts)
             {
 
-    <h3 style="display: inline">@Html.DisplayFor(model => item.TypeName) </h3><h4 style="display: inline">(@Html.DisplayFor(modelItem => item.ProductCount))</h4>
+    <h3 style="display: inline"><a asp-controller="ProductTypes" asp-action="Details" asp-route-id="@item.TypeId"> @Html.DisplayFor(model => item.TypeName) </a></h3><h4 style="display: inline">(@Html.DisplayFor(modelItem => item.ProductCount))</h4>
 
                 <ul style="list-style: none">
                     @foreach (var prod in item.Products)
