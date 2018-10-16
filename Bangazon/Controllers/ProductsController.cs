@@ -47,6 +47,17 @@ namespace Bangazon.Controllers
                 .Include(p => p.ApplicationUser)
                 .Include(p => p.ProductType)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
+
+            var productSales = (_context.OrderProduct
+                .Join(_context.Order, 
+                op => op.OrderId,
+                o => o.OrderId,
+                (op, o) => new {OrderProduct = op, Order = o})
+                .Where(opAndo => opAndo.OrderProduct.ProductId == product.ProductId)
+                .Where(opAndo => opAndo.Order.PaymentTypeId != null)).Count();
+
+            product.Quantity = product.Quantity - productSales;
+
             if (product == null)
             {
                 return NotFound();
