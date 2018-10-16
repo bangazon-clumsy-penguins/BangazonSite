@@ -22,13 +22,7 @@ namespace Bangazon.Models
         public string LastName { get; set; }
 
         [NotMapped]
-        public string FullName
-        {
-            get
-            {
-                return $"{FirstName} {LastName}";
-            }
-        }
+        public string FullName => $"{FirstName} {LastName}";
 
         [Required]
         public string StreetAddress { get; set; }
