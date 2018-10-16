@@ -32,9 +32,9 @@ namespace Bangazon.Models
 
         public int Quantity { get; set; }
 
+        [Required]
         public string ApplicationUserId { get; set; }
 
-        [Required]
         public ApplicationUser ApplicationUser { get; set; }
 
         [Required]
