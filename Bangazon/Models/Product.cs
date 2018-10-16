@@ -6,41 +6,44 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Bangazon.Models
 {
     public class Product
-  {
-    [Key]
-    public int ProductId {get;set;}
+    {
+        [Key]
+        public int ProductId { get; set; }
 
-    [Required]
-    [DataType(DataType.Date)]
-    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-    public DateTime DateCreated {get;set;}
+        [Required]
+        [DataType(DataType.Date)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime DateCreated { get; set; }
 
-    [Required]
-    [StringLength(255)]
-    public string Description { get; set; }
+        [Required]
+        [StringLength(255)]
+        public string Description { get; set; }
 
-    [Required]
-    [StringLength(55, ErrorMessage="Please shorten the product title to 55 characters")]
-    public string Title { get; set; }
+        [Required]
+        public string City { get; set; }
 
-    [Required]
-    [DisplayFormat(DataFormatString = "{0:C}")]
-    public double Price { get; set; }
+        [Required]
+        [StringLength(55, ErrorMessage = "Please shorten the product title to 55 characters")]
+        public string Title { get; set; }
 
-    public int Quantity { get; set; }
+        [Required]
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        public double Price { get; set; }
 
-    public string ApplicationUserId { get; set; }
+        public int Quantity { get; set; }
 
-    [Required]
-    public ApplicationUser ApplicationUser { get; set; }
+        public string ApplicationUserId { get; set; }
 
-    [Required]
-    [Display(Name="Product Category")]
-    public int ProductTypeId { get; set; }
+        [Required]
+        public ApplicationUser ApplicationUser { get; set; }
 
-    public ProductType ProductType { get; set; }
+        [Required]
+        [Display(Name = "Product Category")]
+        public int ProductTypeId { get; set; }
 
-    public virtual ICollection<OrderProduct> OrderProducts { get; set; }
+        public ProductType ProductType { get; set; }
 
-  }
+        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
+
+    }
 }
