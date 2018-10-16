@@ -1,10 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Bangazon</title>
-
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -27,9 +28,14 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Bangazon</a>
-            </div>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <form class="navbar-text" asp-controller="Products" asp-action="Search"><input name="searchQuery" type="text" placeholder="search for products" /><button style="display:none" type="submit"></button></form>
+                }
+                </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Product Types</a></li>
                     <li><a asp-area="" asp-controller="Products" asp-action="Types">Product Categories</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Sell Something</a></li>
@@ -39,7 +45,6 @@
             </div>
         </div>
     </nav>
-
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -47,7 +52,6 @@
             <p>&copy; 2018 - Bangazon</p>
         </footer>
     </div>
-
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -68,7 +72,6 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>
