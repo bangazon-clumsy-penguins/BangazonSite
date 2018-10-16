@@ -13,6 +13,7 @@ namespace Bangazon.Models
         [Required]
         [DataType(DataType.Date)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
         [Required]
@@ -35,12 +36,14 @@ namespace Bangazon.Models
         public string ApplicationUserId { get; set; }
 
         [Required]
+        [Display(Name = "User")]
         public ApplicationUser ApplicationUser { get; set; }
 
         [Required]
-        [Display(Name = "Product Category")]
+        [Display(Name = "Product Category ID")]
         public int ProductTypeId { get; set; }
 
+        [Display(Name = "Product Category")]
         public ProductType ProductType { get; set; }
 
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
