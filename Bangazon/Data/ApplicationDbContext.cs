@@ -59,7 +59,6 @@ namespace Bangazon.Data
                 NormalizedUserName = "ADMIN@ADMIN.COM",
                 Email = "admin@admin.com",
                 NormalizedEmail = "ADMIN@ADMIN.COM",
-                City = "Poop",
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 SecurityStamp = Guid.NewGuid().ToString("D")
@@ -75,7 +74,6 @@ namespace Bangazon.Data
                 NormalizedUserName = "LADYFACE@FACES.COM",
                 Email = "ladyface@faces.com",
                 NormalizedEmail = "LADYFACE@FACES.COM",
-                City = "Poop Town",
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 SecurityStamp = Guid.NewGuid().ToString("D")
@@ -234,6 +232,7 @@ namespace Bangazon.Data
             {
                 ProductId = 1,
                 Description = "Description of product 1",
+                City = "Poop Town",
                 Title = "Product 1",
                 Price = 10.00,
                 ApplicationUserId = user.Id,
@@ -245,6 +244,7 @@ namespace Bangazon.Data
             {
                 ProductId = 2,
                 Description = "Description of product 2",
+                City = "Nashville",
                 Title = "Product 2",
                 Price = 20.00,
                 ApplicationUserId = user.Id,
@@ -256,6 +256,7 @@ namespace Bangazon.Data
             {
                 ProductId = 3,
                 Description = "Description of product 3",
+                City = "Poop Town",
                 Title = "Product 3",
                 Price = 30.00,
                 ApplicationUserId = user.Id,
@@ -267,6 +268,7 @@ namespace Bangazon.Data
             {
                 ProductId = 4,
                 Description = "Description of product 4",
+                City = "Nashville",
                 Title = "Product 4",
                 Price = 10.00,
                 ApplicationUserId = user.Id,
@@ -278,6 +280,7 @@ namespace Bangazon.Data
             {
                 ProductId = 5,
                 Description = "Description of product 5",
+                City = "Chicago",
                 Title = "Product 5",
                 Price = 50.00,
                 ApplicationUserId = user.Id,
@@ -289,6 +292,7 @@ namespace Bangazon.Data
             {
                 ProductId = 6,
                 Description = "Description of product 6",
+                City = "San Diego",
                 Title = "Product 6",
                 Price = 60.00,
                 ApplicationUserId = user2.Id,
@@ -300,6 +304,7 @@ namespace Bangazon.Data
             {
                 ProductId = 7,
                 Description = "Description of product 7",
+                City = "Denver",
                 Title = "Product 7",
                 Price = 70.00,
                 ApplicationUserId = user2.Id,
@@ -311,6 +316,7 @@ namespace Bangazon.Data
             {
                 ProductId = 8,
                 Description = "Description of product 8",
+                City = "Los Angeles",
                 Title = "Product 8",
                 Price = 80.00,
                 ApplicationUserId = user2.Id,

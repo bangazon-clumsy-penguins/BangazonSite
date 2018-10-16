@@ -22,9 +22,6 @@ namespace Bangazon.Models
 
         [Required]
         public string StreetAddress { get; set; }
-
-        [Required]
-        public string City { get; set; }
         
         public virtual ICollection<Product> Products { get; set; }
 

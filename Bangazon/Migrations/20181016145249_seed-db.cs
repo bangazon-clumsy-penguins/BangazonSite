@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Bangazon.Migrations
 {
-    public partial class allSeedData : Migration
+    public partial class seeddb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,8 +43,7 @@ namespace Bangazon.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
-                    StreetAddress = table.Column<string>(nullable: false),
-                    City = table.Column<string>(nullable: false)
+                    StreetAddress = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -200,6 +199,7 @@ namespace Bangazon.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
                     Description = table.Column<string>(maxLength: 255, nullable: false),
+                    City = table.Column<string>(nullable: false),
                     Title = table.Column<string>(maxLength: 55, nullable: false),
                     Price = table.Column<double>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
@@ -279,11 +279,11 @@ namespace Bangazon.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "StreetAddress", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "StreetAddress", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "36a170a6-ff63-41fa-b1e9-5cd9e2aaabc5", 0, "Poop", "875cff89-b961-45f7-8af3-27b6fb0d17a4", "admin@admin.com", true, "admin", "admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEOqO7fpJfvEoKgzOBiqo6EVIxIdrhgNmJR8YxIVun9r1MZImsCmmm4TFcMded4T0FA==", null, false, "360c6891-79d4-48b6-b0ee-d5a0cde64b80", "123 Infinity Way", false, "admin@admin.com" },
-                    { "539d6954-dff4-4b4e-867f-ecd2cde4a1ef", 0, "Poop Town", "3cfb7307-abf5-4f35-bc5d-3b79c6452f2c", "ladyface@faces.com", true, "April", "AwesomeLastName", false, null, "LADYFACE@FACES.COM", "LADYFACE@FACES.COM", "AQAAAAEAACcQAAAAEKdT9Hj23HTqQiVjF5qzVDITCX5iHxENSwlgqPAntC8V4Dwiy/eci/gSgtNlY8ejqA==", null, false, "39e4adc1-46e7-4142-a369-aa85c3b49dc5", "123 New Way", false, "LadyFace@Faces.com" }
+                    { "274616bc-e8ec-4135-ac60-3b0661f34604", 0, "70335377-b375-401f-909e-7108490c0e64", "admin@admin.com", true, "admin", "admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAECZQvkHMYBwWKUHZIneXbRhid0heDXKcM0wxXtfNG8Y3BkBmYmworW37BBBu9Br+Yw==", null, false, "6db8b181-beb0-4c20-a6c4-d1abf9b5dfc6", "123 Infinity Way", false, "admin@admin.com" },
+                    { "f4a4d82c-8eca-45a6-ae95-2b56d4e67e08", 0, "7e7458ef-75f7-4bd1-9869-2d52e49cc1aa", "ladyface@faces.com", true, "April", "AwesomeLastName", false, null, "LADYFACE@FACES.COM", "LADYFACE@FACES.COM", "AQAAAAEAACcQAAAAEEntZqP+iM4G9+GHHhZGjPmiiLUAbIA+p5SDxgASdC6P4xt1GF+2ifVZKX/hYP1qdA==", null, false, "51228d94-95d3-47a4-b20b-9823b3ab1eab", "123 New Way", false, "LadyFace@Faces.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -302,8 +302,8 @@ namespace Bangazon.Migrations
                 columns: new[] { "OrderId", "ApplicationUserId", "DateCompleted", "DateCreated", "PaymentTypeId" },
                 values: new object[,]
                 {
-                    { 5, "36a170a6-ff63-41fa-b1e9-5cd9e2aaabc5", null, new DateTime(2018, 10, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
-                    { 4, "539d6954-dff4-4b4e-867f-ecd2cde4a1ef", null, new DateTime(2018, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null }
+                    { 5, "274616bc-e8ec-4135-ac60-3b0661f34604", null, new DateTime(2018, 10, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
+                    { 4, "f4a4d82c-8eca-45a6-ae95-2b56d4e67e08", null, new DateTime(2018, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null }
                 });
 
             migrationBuilder.InsertData(
@@ -311,24 +311,24 @@ namespace Bangazon.Migrations
                 columns: new[] { "PaymentTypeId", "AccountNumber", "ApplicationUserId", "DateCreated", "Description" },
                 values: new object[,]
                 {
-                    { 1, "86753095551212", "36a170a6-ff63-41fa-b1e9-5cd9e2aaabc5", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "American Express" },
-                    { 2, "4102948572991", "36a170a6-ff63-41fa-b1e9-5cd9e2aaabc5", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover" },
-                    { 3, "9992948572991", "539d6954-dff4-4b4e-867f-ecd2cde4a1ef", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover" }
+                    { 1, "86753095551212", "274616bc-e8ec-4135-ac60-3b0661f34604", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "American Express" },
+                    { 2, "4102948572991", "274616bc-e8ec-4135-ac60-3b0661f34604", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover" },
+                    { 3, "9992948572991", "f4a4d82c-8eca-45a6-ae95-2b56d4e67e08", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Product",
-                columns: new[] { "ProductId", "ApplicationUserId", "DateCreated", "Description", "Price", "ProductTypeId", "Quantity", "Title" },
+                columns: new[] { "ProductId", "ApplicationUserId", "City", "DateCreated", "Description", "Price", "ProductTypeId", "Quantity", "Title" },
                 values: new object[,]
                 {
-                    { 1, "36a170a6-ff63-41fa-b1e9-5cd9e2aaabc5", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 1", 10.0, 1, 3, "Product 1" },
-                    { 5, "36a170a6-ff63-41fa-b1e9-5cd9e2aaabc5", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 5", 50.0, 1, 34, "Product 5" },
-                    { 2, "36a170a6-ff63-41fa-b1e9-5cd9e2aaabc5", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 2", 20.0, 2, 123, "Product 2" },
-                    { 6, "539d6954-dff4-4b4e-867f-ecd2cde4a1ef", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 6", 60.0, 2, 87, "Product 6" },
-                    { 3, "36a170a6-ff63-41fa-b1e9-5cd9e2aaabc5", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 3", 30.0, 3, 754, "Product 3" },
-                    { 7, "539d6954-dff4-4b4e-867f-ecd2cde4a1ef", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 7", 70.0, 3, 7, "Product 7" },
-                    { 4, "36a170a6-ff63-41fa-b1e9-5cd9e2aaabc5", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 4", 10.0, 4, 5, "Product 4" },
-                    { 8, "539d6954-dff4-4b4e-867f-ecd2cde4a1ef", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 8", 80.0, 4, 10, "Product 8" }
+                    { 1, "274616bc-e8ec-4135-ac60-3b0661f34604", "Poop Town", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 1", 10.0, 1, 3, "Product 1" },
+                    { 5, "274616bc-e8ec-4135-ac60-3b0661f34604", "Chicago", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 5", 50.0, 1, 34, "Product 5" },
+                    { 2, "274616bc-e8ec-4135-ac60-3b0661f34604", "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 2", 20.0, 2, 123, "Product 2" },
+                    { 6, "f4a4d82c-8eca-45a6-ae95-2b56d4e67e08", "San Diego", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 6", 60.0, 2, 87, "Product 6" },
+                    { 3, "274616bc-e8ec-4135-ac60-3b0661f34604", "Poop Town", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 3", 30.0, 3, 754, "Product 3" },
+                    { 7, "f4a4d82c-8eca-45a6-ae95-2b56d4e67e08", "Denver", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 7", 70.0, 3, 7, "Product 7" },
+                    { 4, "274616bc-e8ec-4135-ac60-3b0661f34604", "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 4", 10.0, 4, 5, "Product 4" },
+                    { 8, "f4a4d82c-8eca-45a6-ae95-2b56d4e67e08", "Los Angeles", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 8", 80.0, 4, 10, "Product 8" }
                 });
 
             migrationBuilder.InsertData(
@@ -336,9 +336,9 @@ namespace Bangazon.Migrations
                 columns: new[] { "OrderId", "ApplicationUserId", "DateCompleted", "DateCreated", "PaymentTypeId" },
                 values: new object[,]
                 {
-                    { 1, "36a170a6-ff63-41fa-b1e9-5cd9e2aaabc5", new DateTime(2018, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2018, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 3, "36a170a6-ff63-41fa-b1e9-5cd9e2aaabc5", new DateTime(2017, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2016, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 },
-                    { 2, "539d6954-dff4-4b4e-867f-ecd2cde4a1ef", new DateTime(2018, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2017, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 }
+                    { 1, "274616bc-e8ec-4135-ac60-3b0661f34604", new DateTime(2018, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2018, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 3, "274616bc-e8ec-4135-ac60-3b0661f34604", new DateTime(2017, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2016, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 2, "f4a4d82c-8eca-45a6-ae95-2b56d4e67e08", new DateTime(2018, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2017, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 }
                 });
 
             migrationBuilder.InsertData(
