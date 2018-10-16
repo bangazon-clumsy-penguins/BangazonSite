@@ -31,6 +31,7 @@ namespace Bangazon.Models
         [DisplayFormat(DataFormatString = "{0:C}")]
         public double Price { get; set; }
 
+        [Display (Name = "Quantity Remaining")]
         public int Quantity { get; set; }
 
         public string ApplicationUserId { get; set; }
