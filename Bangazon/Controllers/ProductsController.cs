@@ -98,15 +98,22 @@ namespace Bangazon.Controllers
 
             var cartProducts = (_context.Order
             .Join(_context.OrderProduct,
-            o => o.OrderId,
-            op => op.OrderId,
-            (op, o) => new { OrderProduct = o, Order = op })
+                o => o.OrderId,
+                op => op.OrderId,
+                (op, o) => new { OrderProduct = o, Order = op })
             .Join(_context.Product,
-            opAndo => opAndo.OrderProduct.ProductId,
-            p => p.ProductId,
-            (opAndo, p) => new { OrderList = opAndo, Products = p })
-            .Where(opAndo => opAndo.OrderList.Order.ApplicationUserId == curUser.Id)
-            .Where(opAndo => opAndo.OrderList.Order.PaymentTypeId == null));
+                oop => oop.OrderProduct.ProductId,
+                p => p.ProductId,
+                (oop, p) => new { OrderList = oop, Products = p })
+            .Where(oop => oop.OrderList.Order.ApplicationUserId == curUser.Id)
+            .Where(oop => oop.OrderList.Order.PaymentTypeId == null)
+            .GroupBy(p => p.Products.ProductId)
+            .Select(pp => new Product()
+            {
+                ProductId = pp.ProductId,
+                Quantity = pp.Quantity
+            } 
+            ));
 
             return View(cartProducts);
         }
