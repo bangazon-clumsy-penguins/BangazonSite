@@ -27,11 +27,19 @@ namespace Bangazon.Controllers
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
+
         // GET: Products
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Product.Include(p => p.ApplicationUser).Include(p => p.ProductType);
-            return View(await applicationDbContext.ToListAsync());
+
+            var productList = await applicationDbContext.ToListAsync();
+
+            ProductListViewModel productListViewModel = new ProductListViewModel()
+            {
+                Products = productList
+            };
+            return View(productListViewModel);
         }
 
         // GET: Products/Details/5
@@ -46,12 +54,24 @@ namespace Bangazon.Controllers
                 .Include(p => p.ApplicationUser)
                 .Include(p => p.ProductType)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
+
+            var productSales = (_context.OrderProduct
+                .Join(_context.Order, 
+                op => op.OrderId,
+                o => o.OrderId,
+                (op, o) => new {OrderProduct = op, Order = o})
+                .Where(opAndo => opAndo.OrderProduct.ProductId == product.ProductId)
+                .Where(opAndo => opAndo.Order.PaymentTypeId != null)).Count();
+
+            product.Quantity = product.Quantity - productSales;
+
+
             if (product == null)
             {
                 return NotFound();
             }
-
-            return View(product);
+            ProductDetailViewModel productDetailViewModel = new ProductDetailViewModel(product);
+            return View(productDetailViewModel);
         }
 
         // GET: Products/Create
@@ -65,6 +85,30 @@ namespace Bangazon.Controllers
             product.Products = new SelectList(_context.ProductType, "ProductTypeId", "Label");
             return View(product);
         }
+
+       
+        public async Task<IActionResult> Types()
+        {
+            var model = new ProductTypesViewModel();
+
+            // Build list of Product instances for display in view
+            // LINQ is awesome
+            model.GroupedProducts = await (
+                from t in _context.ProductType
+                join p in _context.Product
+                on t.ProductTypeId equals p.ProductTypeId
+                group new { t, p } by new { t.ProductTypeId, t.Label } into grouped
+                select new GroupedProducts
+                {
+                    TypeId = grouped.Key.ProductTypeId,
+                    TypeName = grouped.Key.Label,
+                    ProductCount = grouped.Select(x => x.p.ProductId).Count(),
+                    Products = grouped.Select(x => x.p).Take(3)
+                }).ToListAsync();
+
+            return View(model);
+        }
+
 
         // POST: Products/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -86,6 +130,7 @@ namespace Bangazon.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ProductCreateViewModel returnModel = new ProductCreateViewModel()
             {
                 Description = product.Description,
