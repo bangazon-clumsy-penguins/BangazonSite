@@ -9,6 +9,7 @@ using Bangazon.Data;
 using Bangazon.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
+using Bangazon.Models.ProductViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -57,10 +58,10 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> Create()
         {
 
-            Product product = new Product();
+            ProductCreateViewModel product = new ProductCreateViewModel();
 
             product.ApplicationUser = await GetCurrentUserAsync();
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            product.Products = new SelectList(_context.ProductType, "ProductTypeId", "Label");
             return View(product);
         }
 
@@ -80,8 +81,19 @@ namespace Bangazon.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
-            return View(product);
+            ProductCreateViewModel returnModel = new ProductCreateViewModel()
+            {
+                Description = product.Description,
+                City = product.City,
+                Title = product.Title,
+                Price = product.Price,
+                Quantity = product.Quantity,
+                ApplicationUserId = currentUser.Id,
+                ApplicationUser = currentUser,
+                ProductTypeId = product.ProductTypeId,
+                Products = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId)
+            };
+            return View(returnModel);
         }
 
         // GET: Products/Edit/5
