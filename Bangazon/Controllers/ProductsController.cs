@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
 using Bangazon.Models.ProductViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace Bangazon.Controllers
 {
@@ -15,10 +16,15 @@ namespace Bangazon.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductsController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public ProductsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Products
         public async Task<IActionResult> Index()
@@ -67,6 +73,42 @@ namespace Bangazon.Controllers
                 }).ToListAsync();
 
             return View(model);
+        }
+
+        public async Task<IActionResult> ShoppingCart()
+        {
+            //var model = new ProductTypesViewModel();
+
+            // Build list of Product instances for display in view
+            // LINQ is awesome
+            //model.GroupedProducts = await (
+            //    from t in _context.ProductType
+            //    join p in _context.Product
+            //    on t.ProductTypeId equals p.ProductTypeId
+            //    group new { t, p } by new { t.ProductTypeId, t.Label } into grouped
+            //    select new GroupedProducts
+            //    {
+            //        TypeId = grouped.Key.ProductTypeId,
+            //        TypeName = grouped.Key.Label,
+            //        ProductCount = grouped.Select(x => x.p.ProductId).Count(),
+            //        Products = grouped.Select(x => x.p).Take(3)
+            //    }).ToListAsync();
+
+            ApplicationUser curUser = await GetCurrentUserAsync();
+
+            var cartProducts = (_context.Order
+            .Join(_context.OrderProduct,
+            o => o.OrderId,
+            op => op.OrderId,
+            (op, o) => new { OrderProduct = o, Order = op })
+            .Join(_context.Product,
+            opAndo => opAndo.OrderProduct.ProductId,
+            p => p.ProductId,
+            (opAndo, p) => new { OrderList = opAndo, Products = p })
+            .Where(opAndo => opAndo.OrderList.Order.ApplicationUserId == curUser.Id)
+            .Where(opAndo => opAndo.OrderList.Order.PaymentTypeId == null));
+
+            return View(cartProducts);
         }
 
         // GET: Products/Create
