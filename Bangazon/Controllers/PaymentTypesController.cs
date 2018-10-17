@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bangazon.Controllers
 {
+    
     public class PaymentTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,6 +21,7 @@ namespace Bangazon.Controllers
             _context = context;
         }
 
+        [Authorize]
         // GET: PaymentTypes
         public async Task<IActionResult> Index()
         {
@@ -26,6 +29,7 @@ namespace Bangazon.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize]
         // GET: PaymentTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -45,6 +49,7 @@ namespace Bangazon.Controllers
             return View(paymentType);
         }
 
+        [Authorize]
         // GET: PaymentTypes/Create
         public IActionResult Create()
         {
@@ -52,6 +57,7 @@ namespace Bangazon.Controllers
             return View();
         }
 
+        [Authorize]
         // POST: PaymentTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -69,6 +75,7 @@ namespace Bangazon.Controllers
             return View(paymentType);
         }
 
+        [Authorize]
         // GET: PaymentTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -86,6 +93,7 @@ namespace Bangazon.Controllers
             return View(paymentType);
         }
 
+        [Authorize]
         // POST: PaymentTypes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -122,6 +130,7 @@ namespace Bangazon.Controllers
             return View(paymentType);
         }
 
+        [Authorize]
         // GET: PaymentTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -141,6 +150,7 @@ namespace Bangazon.Controllers
             return View(paymentType);
         }
 
+        [Authorize]
         // POST: PaymentTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
