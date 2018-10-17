@@ -27,9 +27,12 @@ namespace Bangazon.Models
         public string Title { get; set; }
 
         [Required]
+        [Range(1, double.MaxValue, ErrorMessage = "The Value must be a positive integer greater than 0")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public double Price { get; set; }
 
+        [Required]
+        [Range(1, double.MaxValue, ErrorMessage = "The Value must be a positive integer greater than 0")]
         public int Quantity { get; set; }
 
         [Required]
