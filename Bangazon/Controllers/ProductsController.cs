@@ -55,6 +55,7 @@ namespace Bangazon.Controllers
         }
 
         // GET: Products/Create
+        // Sends user to Create product view. ProductTypes are added to the Products SelectList on the ProductCreateViewModel
         public async Task<IActionResult> Create()
         {
 
@@ -68,6 +69,10 @@ namespace Bangazon.Controllers
         // POST: Products/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // On submission of the new product. Create Post will only be called if all the fields are valid. Adds the current userId to the
+        // product being posted to the DB
+        // If ModelState validation fails, a new ProductCreateViewModel will be generated with the current Products information and will
+        // be returned to the view. 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProductId,Description,City,Title,Price,Quantity,ApplicationUserId,ProductTypeId")] Product product)
