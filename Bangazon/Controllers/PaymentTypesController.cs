@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
 using Microsoft.AspNetCore.Authorization;
+using Bangazon.Models.PaymentTypeViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -19,6 +20,7 @@ namespace Bangazon.Controllers
         public PaymentTypesController(ApplicationDbContext context)
         {
             _context = context;
+
         }
 
         [Authorize]
@@ -26,7 +28,14 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.PaymentType.Include(p => p.ApplicationUser);
-            return View(await applicationDbContext.ToListAsync());
+
+            var paymentTypeList = await applicationDbContext.ToListAsync();
+
+            PaymentTypeListViewModel paymentTypeListViewModel = new PaymentTypeListViewModel()
+            {
+                PaymentTypes = paymentTypeList
+            };
+            return View(paymentTypeListViewModel);
         }
 
         [Authorize]

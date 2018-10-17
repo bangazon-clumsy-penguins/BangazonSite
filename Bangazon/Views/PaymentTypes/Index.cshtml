@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bangazon.Models.PaymentType>
+﻿@model Bangazon.Models.PaymentTypeViewModels.PaymentTypeListViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -13,22 +13,20 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
+                @Html.DisplayNameFor(model => model.PaymentTypes[0].DateCreated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.PaymentTypes[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AccountNumber)
+                @Html.DisplayNameFor(model => model.PaymentTypes[0].AccountNumber)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser)
-            </th>
+          
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.PaymentTypes) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.DateCreated)
@@ -39,9 +37,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.AccountNumber)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-            </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.PaymentTypeId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.PaymentTypeId">Details</a> |
