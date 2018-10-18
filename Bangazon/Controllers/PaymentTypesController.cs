@@ -177,7 +177,19 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var paymentType = await _context.PaymentType.FindAsync(id);
-            _context.PaymentType.Remove(paymentType);
+
+            var orderHistory = (_context.Order
+                .Include(o => o.PaymentTypeId)
+                .Where(o => o.PaymentTypeId == id)).Count();
+
+            if (orderHistory > 0)
+            {
+                paymentType.IsActive = false;    
+            }
+            else
+            {
+                _context.PaymentType.Remove(paymentType);
+            }
            
 
             PaymentTypeDeleteViewModel paymentTypeDeleteViewModel = new PaymentTypeDeleteViewModel(paymentType);

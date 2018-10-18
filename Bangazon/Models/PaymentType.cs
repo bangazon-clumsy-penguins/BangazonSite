@@ -16,7 +16,8 @@ namespace Bangazon.Models
     [DataType(DataType.Date)]
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime DateCreated { get; set; }
-
+    
+    [Display (Name = "Active?")]
     public bool IsActive { get; set; }
 
     [Required]
