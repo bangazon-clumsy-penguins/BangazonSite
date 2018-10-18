@@ -9,6 +9,7 @@ using Bangazon.Data;
 using Bangazon.Models;
 using Microsoft.AspNetCore.Authorization;
 using Bangazon.Models.PaymentTypeViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace Bangazon.Controllers
 {
@@ -17,17 +18,26 @@ namespace Bangazon.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public PaymentTypesController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public PaymentTypesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
 
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         [Authorize]
         // GET: PaymentTypes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.PaymentType.Include(p => p.ApplicationUser);
+            var currentUserId = GetCurrentUserAsync().Id.ToString();
+
+            var applicationDbContext = _context.PaymentType
+                .Include(p => p.ApplicationUser)
+                .Where(p => p.ApplicationUserId == currentUserId);
 
             var paymentTypeList = await applicationDbContext.ToListAsync();
 
