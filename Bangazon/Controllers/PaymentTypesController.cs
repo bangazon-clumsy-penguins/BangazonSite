@@ -33,11 +33,11 @@ namespace Bangazon.Controllers
         // GET: PaymentTypes
         public async Task<IActionResult> Index()
         {
-            var currentUserId = GetCurrentUserAsync().Id.ToString();
-
+            var currentUser = await GetCurrentUserAsync();
+           
             var applicationDbContext = _context.PaymentType
-                .Include(p => p.ApplicationUser)
-                .Where(p => p.ApplicationUserId == currentUserId);
+            .Include(p => p.ApplicationUser)
+            .Where(p => p.ApplicationUserId == currentUser.Id);
 
             var paymentTypeList = await applicationDbContext.ToListAsync();
 
@@ -166,7 +166,8 @@ namespace Bangazon.Controllers
                 return NotFound();
             }
 
-            return View(paymentType);
+            PaymentTypeDeleteViewModel paymentTypeDeleteViewModel = new PaymentTypeDeleteViewModel(paymentType);
+            return View(paymentTypeDeleteViewModel);
         }
 
         [Authorize]

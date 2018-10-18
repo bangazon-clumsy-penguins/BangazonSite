@@ -13,9 +13,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PaymentTypes[0].DateCreated)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.PaymentTypes[0].Description)
             </th>
             <th>
@@ -28,9 +25,6 @@
     <tbody>
 @foreach (var item in Model.PaymentTypes) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
