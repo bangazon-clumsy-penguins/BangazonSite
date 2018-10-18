@@ -181,7 +181,7 @@ namespace Bangazon.Controllers
            
 
             PaymentTypeDeleteViewModel paymentTypeDeleteViewModel = new PaymentTypeDeleteViewModel(paymentType);
-            await _context.SaveChangesAsync();
+             await _context.SaveChangesAsync();
             return View(paymentTypeDeleteViewModel);
         }
 
