@@ -190,9 +190,9 @@ namespace Bangazon.Controllers
             else
             {
                 _context.PaymentType.Remove(paymentType);
-                await _context.SaveChangesAsync();
             }
 
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
