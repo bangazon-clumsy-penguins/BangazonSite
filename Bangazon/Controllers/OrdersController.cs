@@ -58,6 +58,11 @@ namespace Bangazon.Controllers
 
             ApplicationUser curUser = await GetCurrentUserAsync();
 
+            if (curUser == null)
+            {
+                return RedirectToAction("Index","Home");
+            }
+
             OrderDetailViewModel shoppingCart = new OrderDetailViewModel();
 
             shoppingCart.Order = await
@@ -71,12 +76,13 @@ namespace Bangazon.Controllers
                  join p in _context.Product
                  on op.ProductId equals p.ProductId
                  where op.OrderId == shoppingCart.Order.OrderId
-                 group p by p into pList
+                 group new { p, op } by p into pList
                  select new OrderLineItem()
                  {
                      Product = pList.Key,
-                     Units = pList.Select(x => x.ProductId).Count(),
-                     Cost = pList.Select(x => x.ProductId).Count() * pList.Single().Price,
+                     Units = pList.Select(x => x.p.ProductId).Count(),
+                     Cost = pList.Select(x => x.p.ProductId).Count() * pList.Key.Price,
+                     orderProducts = pList.Select(x => x.op).ToList()
                  } 
                  ;
 
