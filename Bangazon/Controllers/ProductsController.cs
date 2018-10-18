@@ -73,19 +73,6 @@ namespace Bangazon.Controllers
             ProductDetailViewModel productDetailViewModel = new ProductDetailViewModel(product);
             return View(productDetailViewModel);
         }
-
-        // GET: Products/Create
-        // Sends user to Create product view. ProductTypes are added to the Products SelectList on the ProductCreateViewModel
-        public async Task<IActionResult> Create()
-        {
-
-            ProductCreateViewModel product = new ProductCreateViewModel();
-
-            product.ApplicationUser = await GetCurrentUserAsync();
-            product.Products = new SelectList(_context.ProductType, "ProductTypeId", "Label");
-            return View(product);
-        }
-
        
         public async Task<IActionResult> Types()
         {
@@ -109,6 +96,17 @@ namespace Bangazon.Controllers
             return View(model);
         }
 
+        // GET: Products/Create
+        // Sends user to Create product view. ProductTypes are added to the Products SelectList on the ProductCreateViewModel
+        public async Task<IActionResult> Create()
+        {
+
+            ProductCreateViewModel product = new ProductCreateViewModel();
+
+            product.ApplicationUser = await GetCurrentUserAsync();
+            product.Products = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            return View(product);
+        }
 
         // POST: Products/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -236,5 +234,13 @@ namespace Bangazon.Controllers
         {
             return _context.Product.Any(e => e.ProductId == id);
         }
+        
+        public async Task<IActionResult> Search (string searchQuery)
+        {
+            List<Product> searchResults = new List<Product>();
+            searchResults = await _context.Product.Where(e => e.Title.Contains(searchQuery)).ToListAsync();
+            return View(searchResults);
+        }
     }
 }
+
