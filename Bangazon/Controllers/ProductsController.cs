@@ -104,7 +104,9 @@ namespace Bangazon.Controllers
             ProductCreateViewModel product = new ProductCreateViewModel();
 
             product.ApplicationUser = await GetCurrentUserAsync();
-            product.Products = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            var test = new { Value = "0", Text = "Please Select" };
+            product.Products = new SelectList(_context.ProductType, "ProductTypeId", "Label").ToList();
+            product.Products.Insert(0, new SelectListItem { Text = "None", Value = "0" });
             return View(product);
         }
 
@@ -139,7 +141,7 @@ namespace Bangazon.Controllers
                 ApplicationUserId = currentUser.Id,
                 ApplicationUser = currentUser,
                 ProductTypeId = product.ProductTypeId,
-                Products = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId)
+                Products = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId).ToList()
             };
             return View(returnModel);
         }

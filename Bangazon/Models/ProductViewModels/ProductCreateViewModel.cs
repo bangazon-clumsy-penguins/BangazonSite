@@ -47,7 +47,7 @@ namespace Bangazon.Models.ProductViewModels
         [Display(Name = "Product Category")]
         public int ProductTypeId { get; set; }
 
-        public SelectList Products { get; set; }
+        public List<SelectListItem> Products { get; set; }
 
         public ProductType ProductType { get; set; }
     }
