@@ -40,7 +40,6 @@ namespace Bangazon.Models
         [Required]
         public string ApplicationUserId { get; set; }
 
-        [Required]
         [Display(Name = "User")]
         public ApplicationUser ApplicationUser { get; set; }
 
