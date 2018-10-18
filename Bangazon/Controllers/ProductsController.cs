@@ -75,49 +75,6 @@ namespace Bangazon.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> ShoppingCart()
-        {
-            //var model = new ProductTypesViewModel();
-
-            // Build list of Product instances for display in view
-            // LINQ is awesome
-            //model.GroupedProducts = await (
-            //    from t in _context.ProductType
-            //    join p in _context.Product
-            //    on t.ProductTypeId equals p.ProductTypeId
-            //    group new { t, p } by new { t.ProductTypeId, t.Label } into grouped
-            //    select new GroupedProducts
-            //    {
-            //        TypeId = grouped.Key.ProductTypeId,
-            //        TypeName = grouped.Key.Label,
-            //        ProductCount = grouped.Select(x => x.p.ProductId).Count(),
-            //        Products = grouped.Select(x => x.p).Take(3)
-            //    }).ToListAsync();
-
-            ApplicationUser curUser = await GetCurrentUserAsync();
-
-            var cartProducts = (_context.Order
-            .Join(_context.OrderProduct,
-                o => o.OrderId,
-                op => op.OrderId,
-                (op, o) => new { OrderProduct = o, Order = op })
-            .Join(_context.Product,
-                oop => oop.OrderProduct.ProductId,
-                p => p.ProductId,
-                (oop, p) => new { OrderList = oop, Products = p })
-            .Where(oop => oop.OrderList.Order.ApplicationUserId == curUser.Id)
-            .Where(oop => oop.OrderList.Order.PaymentTypeId == null)
-            .GroupBy(p => p.Products.ProductId)
-            .Select(pp => new Product()
-            {
-                ProductId = pp.ProductId,
-                Quantity = pp.Quantity
-            } 
-            ));
-
-            return View(cartProducts);
-        }
-
         // GET: Products/Create
         public IActionResult Create()
         {

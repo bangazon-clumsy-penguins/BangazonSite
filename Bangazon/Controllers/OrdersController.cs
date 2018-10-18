@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Bangazon.Models.OrderViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace Bangazon.Controllers
 {
@@ -14,10 +16,15 @@ namespace Bangazon.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public OrdersController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public OrdersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         // GET: Orders
         public async Task<IActionResult> Index()
@@ -44,6 +51,36 @@ namespace Bangazon.Controllers
             }
 
             return View(order);
+        }
+
+        public async Task<IActionResult> ShoppingCart()
+        {
+
+            ApplicationUser curUser = await GetCurrentUserAsync();
+
+            OrderDetailViewModel shoppingCart = new OrderDetailViewModel();
+
+            shoppingCart.Order = await
+                (from o in _context.Order
+                 where o.ApplicationUserId == curUser.Id &&
+                     o.PaymentTypeId == null
+                 select o).FirstOrDefaultAsync();
+
+            shoppingCart.LineItems =
+                from op in _context.OrderProduct
+                 join p in _context.Product
+                 on op.ProductId equals p.ProductId
+                 where op.OrderId == shoppingCart.Order.OrderId
+                 group p by p into pList
+                 select new OrderLineItem()
+                 {
+                     Product = pList.Key,
+                     Units = pList.Select(x => x.ProductId).Count(),
+                     Cost = pList.Select(x => x.ProductId).Count() * pList.Single().Price,
+                 } 
+                 ;
+
+            return View(shoppingCart);
         }
 
         // GET: Orders/Create
