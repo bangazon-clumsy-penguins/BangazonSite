@@ -178,8 +178,11 @@ namespace Bangazon.Controllers
         {
             var paymentType = await _context.PaymentType.FindAsync(id);
             _context.PaymentType.Remove(paymentType);
+           
+
+            PaymentTypeDeleteViewModel paymentTypeDeleteViewModel = new PaymentTypeDeleteViewModel(paymentType);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return View(paymentTypeDeleteViewModel);
         }
 
         private bool PaymentTypeExists(int id)
