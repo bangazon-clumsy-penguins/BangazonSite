@@ -37,7 +37,8 @@ namespace Bangazon.Controllers
            
             var applicationDbContext = _context.PaymentType
             .Include(p => p.ApplicationUser)
-            .Where(p => p.ApplicationUserId == currentUser.Id);
+            .Where(p => p.ApplicationUserId == currentUser.Id)
+            .Where(p => p.IsActive == true);
 
             var paymentTypeList = await applicationDbContext.ToListAsync();
 
@@ -184,17 +185,15 @@ namespace Bangazon.Controllers
 
             if (orderHistory > 0)
             {
-                paymentType.IsActive = false;    
+                paymentType.IsActive = false;  
             }
             else
             {
                 _context.PaymentType.Remove(paymentType);
+                await _context.SaveChangesAsync();
             }
-           
 
-            PaymentTypeDeleteViewModel paymentTypeDeleteViewModel = new PaymentTypeDeleteViewModel(paymentType);
-             await _context.SaveChangesAsync();
-            return View(paymentTypeDeleteViewModel);
+            return RedirectToAction(nameof(Index));
         }
 
         private bool PaymentTypeExists(int id)
