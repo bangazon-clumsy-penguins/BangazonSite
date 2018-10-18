@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bangazon.Models
 {
+   
   public class PaymentType
   {
     [Key]
@@ -15,6 +16,9 @@ namespace Bangazon.Models
     [DataType(DataType.Date)]
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime DateCreated { get; set; }
+    
+    [Display (Name = "Active?")]
+    public bool IsActive { get; set; }
 
     [Required]
     [StringLength(20)]

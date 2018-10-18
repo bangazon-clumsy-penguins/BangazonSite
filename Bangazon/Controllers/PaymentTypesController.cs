@@ -7,25 +7,49 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Authorization;
+using Bangazon.Models.PaymentTypeViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace Bangazon.Controllers
 {
+    
     public class PaymentTypesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public PaymentTypesController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public PaymentTypesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+
         }
 
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
+        [Authorize]
         // GET: PaymentTypes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.PaymentType.Include(p => p.ApplicationUser);
-            return View(await applicationDbContext.ToListAsync());
+            var currentUser = await GetCurrentUserAsync();
+           
+            var applicationDbContext = _context.PaymentType
+            .Include(p => p.ApplicationUser)
+            .Where(p => p.ApplicationUserId == currentUser.Id)
+            .Where(p => p.IsActive == true);
+
+            var paymentTypeList = await applicationDbContext.ToListAsync();
+
+            PaymentTypeListViewModel paymentTypeListViewModel = new PaymentTypeListViewModel()
+            {
+                PaymentTypes = paymentTypeList
+            };
+            return View(paymentTypeListViewModel);
         }
 
+        [Authorize]
         // GET: PaymentTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -45,6 +69,7 @@ namespace Bangazon.Controllers
             return View(paymentType);
         }
 
+        [Authorize]
         // GET: PaymentTypes/Create
         public IActionResult Create()
         {
@@ -52,6 +77,7 @@ namespace Bangazon.Controllers
             return View();
         }
 
+        [Authorize]
         // POST: PaymentTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -69,6 +95,7 @@ namespace Bangazon.Controllers
             return View(paymentType);
         }
 
+        [Authorize]
         // GET: PaymentTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -86,6 +113,7 @@ namespace Bangazon.Controllers
             return View(paymentType);
         }
 
+        [Authorize]
         // POST: PaymentTypes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -122,6 +150,7 @@ namespace Bangazon.Controllers
             return View(paymentType);
         }
 
+        [Authorize]
         // GET: PaymentTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -138,16 +167,31 @@ namespace Bangazon.Controllers
                 return NotFound();
             }
 
-            return View(paymentType);
+            PaymentTypeDeleteViewModel paymentTypeDeleteViewModel = new PaymentTypeDeleteViewModel(paymentType);
+            return View(paymentTypeDeleteViewModel);
         }
 
+        [Authorize]
         // POST: PaymentTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var paymentType = await _context.PaymentType.FindAsync(id);
-            _context.PaymentType.Remove(paymentType);
+
+            var orderHistory = (_context.Order
+                .Include(o => o.PaymentTypeId)
+                .Where(o => o.PaymentTypeId == id)).Count();
+
+            if (orderHistory > 0)
+            {
+                paymentType.IsActive = false;  
+            }
+            else
+            {
+                _context.PaymentType.Remove(paymentType);
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
