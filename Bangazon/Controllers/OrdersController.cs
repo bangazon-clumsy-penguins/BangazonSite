@@ -89,8 +89,21 @@ namespace Bangazon.Controllers
             return View(shoppingCart);
         }
 
-        // GET: Orders/Create
-        public IActionResult Create()
+        [HttpPost, ActionName("RemoveFromCart")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveFromCart(List<OrderProduct> orderProducts)
+        {
+            foreach (OrderProduct op in orderProducts)
+            {
+                _context.OrderProduct.Remove(op);
+            }
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ShoppingCart));
+        }
+
+            // GET: Orders/Create
+            public IActionResult Create()
         {
             ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
             ViewData["PaymentTypeId"] = new SelectList(_context.PaymentType, "PaymentTypeId", "AccountNumber");

@@ -41,9 +41,22 @@
                 @Html.DisplayFor(modelItem => item.Cost)
             </td>
             <td>
-                Modify
+                <form asp-action="RemoveFromCart">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="@item.orderProducts" />
+       
+                            <input type="submit" value="Remove" class="btn btn-default" />
+                    </div>
+                </form>
             </td>
         </tr>
         }
     </tbody>
 </table>
+
+@*<button class="">
+    @Html.ActionLing(
+   LinkText:
+   actionName: ""
+   controllerName: "")
+</button>*@
