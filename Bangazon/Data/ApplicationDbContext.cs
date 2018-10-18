@@ -118,9 +118,10 @@ namespace Bangazon.Data
             modelBuilder.Entity<ProductType>().HasData(ProductType4);
 
 
-            modelBuilder.Entity<PaymentType> ().HasData (
+            modelBuilder.Entity<PaymentType>().HasData(
                 new PaymentType() {
                     PaymentTypeId = 1,
+                    IsActive = true,
                     ApplicationUserId = user.Id,
                     Description = "American Express",
                     AccountNumber = "86753095551212"
@@ -128,6 +129,7 @@ namespace Bangazon.Data
                 new PaymentType()
                 {
                     PaymentTypeId = 2,
+                    IsActive = true,
                     ApplicationUserId = user.Id,
                     Description = "Discover",
                     AccountNumber = "4102948572991"
@@ -135,6 +137,7 @@ namespace Bangazon.Data
                 new PaymentType()
                 {
                     PaymentTypeId = 3,
+                    IsActive = true,
                     ApplicationUserId = user2.Id,
                     Description = "Discover",
                     AccountNumber = "9992948572991"
