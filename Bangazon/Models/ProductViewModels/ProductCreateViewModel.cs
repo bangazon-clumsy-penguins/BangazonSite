@@ -29,10 +29,8 @@ namespace Bangazon.Models.ProductViewModels
         [StringLength(55, ErrorMessage = "Please shorten the product title to 55 characters")]
         public string Title { get; set; }
 
-        [Required]
-        [Range(1, double.MaxValue, ErrorMessage = "The Value must be a positive integer greater than 0")]
-        [DisplayFormat(DataFormatString = "{0:C}")]
-        [LessThan10k]
+        //[Required]
+        //[DisplayFormat(DataFormatString = "{0:C}")]
         public double Price { get; set; }
 
         [Required]
@@ -51,20 +49,5 @@ namespace Bangazon.Models.ProductViewModels
         public SelectList Products { get; set; }
 
         public ProductType ProductType { get; set; }
-
-        public class LessThan10k : ValidationAttribute
-        {
-            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-            {
-                Product product = (Product)validationContext.ObjectInstance;
-
-                if (product.Price > 10000)
-                {
-                    return new ValidationResult("Item price cannot exceed $10,000.");
-                }
-
-                return ValidationResult.Success;
-            }
-        }
     }
 }
