@@ -28,7 +28,7 @@ namespace Bangazon.Models
         public string Title { get; set; }
 
         [Required]
-        [Range(1, double.MaxValue, ErrorMessage = "The Value must be a positive integer greater than 0")]
+        [PriceValidation]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public double Price { get; set; }
 
@@ -44,6 +44,7 @@ namespace Bangazon.Models
         public ApplicationUser ApplicationUser { get; set; }
 
         [Required]
+        [NotZero]
         [Display(Name = "Product Category ID")]
         public int ProductTypeId { get; set; }
 
@@ -51,6 +52,40 @@ namespace Bangazon.Models
         public ProductType ProductType { get; set; }
 
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
+
+        public class NotZero : ValidationAttribute
+        {
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                Product product = (Product)validationContext.ObjectInstance;
+
+                if (product.ProductTypeId == 0)
+                {
+                    return new ValidationResult("Must Select a product type");
+                }
+                return ValidationResult.Success;
+            }
+        }
+
+        public class PriceValidation : ValidationAttribute
+        {
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                Product product = (Product)validationContext.ObjectInstance;
+
+                if (product.Price <= 0)
+                {
+                    return new ValidationResult("Please enter a value greater than 0");
+                }
+
+                if (product.Price > 10000)
+                {
+                    return new ValidationResult("Item price cannot exceed $10,000.");
+                }
+
+                return ValidationResult.Success;
+            }
+        }
 
     }
 }

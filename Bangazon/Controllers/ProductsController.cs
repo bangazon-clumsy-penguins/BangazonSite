@@ -102,8 +102,8 @@ namespace Bangazon.Controllers
         {
 
             ProductCreateViewModel product = new ProductCreateViewModel();
-
-            product.ApplicationUser = await GetCurrentUserAsync();
+            product.Product = new Product();
+            product.Product.ApplicationUser = await GetCurrentUserAsync();
             product.Products = new SelectList(_context.ProductType, "ProductTypeId", "Label").ToList();
             product.Products.Insert(0, new SelectListItem { Text = "None", Value = "0" });
             return View(product);
@@ -122,7 +122,7 @@ namespace Bangazon.Controllers
         {
             ApplicationUser currentUser = await GetCurrentUserAsync();
             product.ApplicationUserId = currentUser.Id;
-            ModelState.Remove("ApplicationUserId");
+            ModelState.Remove("product.ApplicationUserId");
             if (ModelState.IsValid)
             {
                 _context.Add(product);
@@ -132,16 +132,11 @@ namespace Bangazon.Controllers
 
             ProductCreateViewModel returnModel = new ProductCreateViewModel()
             {
-                Description = product.Description,
-                City = product.City,
-                Title = product.Title,
-                Price = product.Price,
-                Quantity = product.Quantity,
-                ApplicationUserId = currentUser.Id,
-                ApplicationUser = currentUser,
-                ProductTypeId = product.ProductTypeId,
+                Product = product,
                 Products = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId).ToList()
             };
+            returnModel.Product.ApplicationUser = await GetCurrentUserAsync();
+            returnModel.Products.Insert(0, new SelectListItem { Text = "None", Value = "0" });
             return View(returnModel);
         }
 
