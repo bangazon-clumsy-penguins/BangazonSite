@@ -104,7 +104,6 @@ namespace Bangazon.Controllers
             ProductCreateViewModel product = new ProductCreateViewModel();
 
             product.ApplicationUser = await GetCurrentUserAsync();
-            var test = new { Value = "0", Text = "Please Select" };
             product.Products = new SelectList(_context.ProductType, "ProductTypeId", "Label").ToList();
             product.Products.Insert(0, new SelectListItem { Text = "None", Value = "0" });
             return View(product);

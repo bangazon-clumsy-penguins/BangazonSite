@@ -44,11 +44,26 @@ namespace Bangazon.Models.ProductViewModels
         public ApplicationUser ApplicationUser { get; set; }
 
         [Required]
+        [NotZero]
         [Display(Name = "Product Category")]
         public int ProductTypeId { get; set; }
 
         public List<SelectListItem> Products { get; set; }
 
         public ProductType ProductType { get; set; }
+
+        public class NotZero : ValidationAttribute
+        {
+            protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+            {
+                ProductCreateViewModel product = (ProductCreateViewModel)validationContext.ObjectInstance;
+
+                if (product.ProductTypeId == 0)
+                {
+                    return new ValidationResult("Must Select a product type");
+                }
+                return ValidationResult.Success;
+            }
+        }
     }
 }
