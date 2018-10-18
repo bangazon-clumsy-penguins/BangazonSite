@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bangazon.Data;
 using Bangazon.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
 using Bangazon.Models.ProductViewModels;
 
 namespace Bangazon.Controllers
@@ -15,10 +17,16 @@ namespace Bangazon.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductsController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public ProductsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
 
         // GET: Products
         public async Task<IActionResult> Index()
@@ -31,7 +39,6 @@ namespace Bangazon.Controllers
             {
                 Products = productList
             };
-
             return View(productListViewModel);
         }
 
@@ -58,6 +65,7 @@ namespace Bangazon.Controllers
 
             product.Quantity = product.Quantity - productSales;
 
+
             if (product == null)
             {
                 return NotFound();
@@ -65,7 +73,6 @@ namespace Bangazon.Controllers
             ProductDetailViewModel productDetailViewModel = new ProductDetailViewModel(product);
             return View(productDetailViewModel);
         }
-
        
         public async Task<IActionResult> Types()
         {
@@ -90,29 +97,51 @@ namespace Bangazon.Controllers
         }
 
         // GET: Products/Create
-        public IActionResult Create()
+        // Sends user to Create product view. ProductTypes are added to the Products SelectList on the ProductCreateViewModel
+        public async Task<IActionResult> Create()
         {
-            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label");
-            return View();
+
+            ProductCreateViewModel product = new ProductCreateViewModel();
+
+            product.ApplicationUser = await GetCurrentUserAsync();
+            product.Products = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            return View(product);
         }
 
         // POST: Products/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // On submission of the new product. Create Post will only be called if all the fields are valid. Adds the current userId to the
+        // product being posted to the DB
+        // If ModelState validation fails, a new ProductCreateViewModel will be generated with the current Products information and will
+        // be returned to the view. 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,DateCreated,Description,City,Title,Price,Quantity,ApplicationUserId,ProductTypeId")] Product product)
+        public async Task<IActionResult> Create([Bind("ProductId,Description,City,Title,Price,Quantity,ApplicationUserId,ProductTypeId")] Product product)
         {
+            ApplicationUser currentUser = await GetCurrentUserAsync();
+            product.ApplicationUserId = currentUser.Id;
+            ModelState.Remove("ApplicationUserId");
             if (ModelState.IsValid)
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", product.ApplicationUserId);
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
-            return View(product);
+
+            ProductCreateViewModel returnModel = new ProductCreateViewModel()
+            {
+                Description = product.Description,
+                City = product.City,
+                Title = product.Title,
+                Price = product.Price,
+                Quantity = product.Quantity,
+                ApplicationUserId = currentUser.Id,
+                ApplicationUser = currentUser,
+                ProductTypeId = product.ProductTypeId,
+                Products = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId)
+            };
+            return View(returnModel);
         }
 
         // GET: Products/Edit/5

@@ -1,11 +1,14 @@
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Bangazon.Models
+namespace Bangazon.Models.ProductViewModels
 {
-    public class Product
+    public class ProductCreateViewModel
     {
         [Key]
         public int ProductId { get; set; }
@@ -13,7 +16,6 @@ namespace Bangazon.Models
         [Required]
         [DataType(DataType.Date)]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
         [Required]
@@ -34,23 +36,19 @@ namespace Bangazon.Models
 
         [Required]
         [Range(1, double.MaxValue, ErrorMessage = "The Value must be a positive integer greater than 0")]
-        [Display (Name = "Quantity Remaining")]
         public int Quantity { get; set; }
 
         [Required]
         public string ApplicationUserId { get; set; }
 
-        [Display(Name = "User")]
         public ApplicationUser ApplicationUser { get; set; }
 
         [Required]
-        [Display(Name = "Product Category ID")]
+        [Display(Name = "Product Category")]
         public int ProductTypeId { get; set; }
 
-        [Display(Name = "Product Category")]
+        public SelectList Products { get; set; }
+
         public ProductType ProductType { get; set; }
-
-        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
-
     }
 }
