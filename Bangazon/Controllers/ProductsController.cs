@@ -233,9 +233,40 @@ namespace Bangazon.Controllers
         
         public async Task<IActionResult> Search (string searchQuery)
         {
-            List<Product> searchResults = new List<Product>();
-            searchResults = await _context.Product.Where(e => e.Title.Contains(searchQuery)).ToListAsync();
-            return View(searchResults);
+            
+
+            if (searchQuery.Contains("city:"))
+            {
+                
+                List<string> newQuery = searchQuery.Split(" ").ToList();
+
+                //string cityQuery = newQuery.Where(x => x.Contains("city:")).ToString();
+                string cityThing = "";
+                string queryString = "";
+                List<string> newArray = new List<string>();
+
+                newQuery.ForEach(thing =>
+                {
+                    if (thing.Contains("city:"))
+                    {
+                        cityThing = thing.Remove(0,5).ToString();
+                    }
+                    else
+                    {
+                        newArray.Add(thing);
+                    }
+                });
+                queryString = String.Join(" ", newArray);
+                List<Product> searchResults = new List<Product>();
+                searchResults = (queryString != "") ? await _context.Product.Where(e => (e.Title.Contains(queryString) && e.City == cityThing)).ToListAsync() : await _context.Product.Where(e => (e.City == cityThing)).ToListAsync();
+                return View(searchResults);
+            }
+            else
+            {
+                List<Product> searchResults = new List<Product>();
+                searchResults = await _context.Product.Where(e => e.Title.Contains(searchQuery)).ToListAsync();
+                return View(searchResults);
+            }
         }
     }
 }

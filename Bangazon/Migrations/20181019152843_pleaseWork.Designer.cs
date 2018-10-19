@@ -4,14 +4,16 @@ using Bangazon.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Bangazon.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181019152843_pleaseWork")]
+    partial class pleaseWork
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,13 +81,8 @@ namespace Bangazon.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-<<<<<<< HEAD
-                        new { Id = "44a6ba84-0009-4a43-86f8-ce5a087a10c4", AccessFailedCount = 0, ConcurrencyStamp = "2a9bcd42-959c-436c-aee8-bf8ccbd2e8cf", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEB8fDG8PlT4q2sBa0XdA3+l6wFlvesgmSNOE2i74vpDrACAB0BZrSmyjzCGt7blAVQ==", PhoneNumberConfirmed = false, SecurityStamp = "5153c12c-9f6c-4552-b673-41bc0d3d34c1", StreetAddress = "123 Infinity Way", TwoFactorEnabled = false, UserName = "admin@admin.com" },
-                        new { Id = "d2ef1916-d390-4241-a54e-5b5639998d72", AccessFailedCount = 0, ConcurrencyStamp = "9be0f68a-4239-4f78-8bd4-564ee9703ff5", Email = "ladyface@faces.com", EmailConfirmed = true, FirstName = "April", LastName = "AwesomeLastName", LockoutEnabled = false, NormalizedEmail = "LADYFACE@FACES.COM", NormalizedUserName = "LADYFACE@FACES.COM", PasswordHash = "AQAAAAEAACcQAAAAEDMEqkBtTpqRZRk8hN8JsVgJXKU3zrkHVm4+GrqmAuoXtqf92lHkoBtiMrdzrTSRJQ==", PhoneNumberConfirmed = false, SecurityStamp = "b7be34b1-f4d6-4e31-8925-e776b941cf8a", StreetAddress = "123 New Way", TwoFactorEnabled = false, UserName = "LadyFace@Faces.com" }
-=======
                         new { Id = "b19a6794-1b2f-40ff-93d5-5f8a141c88d7", AccessFailedCount = 0, ConcurrencyStamp = "89125bff-bbd8-4aec-a09a-65863a2290c7", Email = "admin@admin.com", EmailConfirmed = true, FirstName = "admin", LastName = "admin", LockoutEnabled = false, NormalizedEmail = "ADMIN@ADMIN.COM", NormalizedUserName = "ADMIN@ADMIN.COM", PasswordHash = "AQAAAAEAACcQAAAAEAbgLCzIBs23SkGPGnWxqe0qbN9JEz3dihNF+f6Nt7W/m4Eix2nSikSzpal6PCt69A==", PhoneNumberConfirmed = false, SecurityStamp = "03b55c34-debe-4e7c-b945-81a5c5d1b2a6", StreetAddress = "123 Infinity Way", TwoFactorEnabled = false, UserName = "admin@admin.com" },
                         new { Id = "fc362c56-6b0c-42c2-a509-4c59856c172a", AccessFailedCount = 0, ConcurrencyStamp = "6ec22a4e-73b9-4084-af0c-26eff6c6fdfa", Email = "ladyface@faces.com", EmailConfirmed = true, FirstName = "April", LastName = "AwesomeLastName", LockoutEnabled = false, NormalizedEmail = "LADYFACE@FACES.COM", NormalizedUserName = "LADYFACE@FACES.COM", PasswordHash = "AQAAAAEAACcQAAAAENR6kWh4GOT2Fzbz1rD75zjGnzQBfPUuQ1+BFDokaCqlyaBHSHBVIxIa/Hzhzh7aIQ==", PhoneNumberConfirmed = false, SecurityStamp = "b3968379-73ae-4a1b-9512-f30f57064843", StreetAddress = "123 New Way", TwoFactorEnabled = false, UserName = "LadyFace@Faces.com" }
->>>>>>> master
                     );
                 });
 
