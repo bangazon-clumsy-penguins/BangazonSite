@@ -20,7 +20,6 @@ namespace Bangazon.Models
         [StringLength(255)]
         public string Description { get; set; }
 
-        [Required]
         public string City { get; set; }
 
         [Required]
@@ -47,6 +46,9 @@ namespace Bangazon.Models
         [NotZero]
         [Display(Name = "Product Category ID")]
         public int ProductTypeId { get; set; }
+
+        [Display(Name ="Local Delivery Available")]
+        public bool IsLocal { get; set; }
 
         [Display(Name = "Product Category")]
         public ProductType ProductType { get; set; }
