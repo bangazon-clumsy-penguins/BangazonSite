@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Bangazon.Migrations
 {
-    public partial class islocal : Migration
+    public partial class shopCart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -200,13 +200,12 @@ namespace Bangazon.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
                     Description = table.Column<string>(maxLength: 255, nullable: false),
-                    City = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: false),
                     Title = table.Column<string>(maxLength: 55, nullable: false),
                     Price = table.Column<double>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     ApplicationUserId = table.Column<string>(nullable: false),
-                    ProductTypeId = table.Column<int>(nullable: false),
-                    IsLocal = table.Column<bool>(nullable: false)
+                    ProductTypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -284,8 +283,8 @@ namespace Bangazon.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "StreetAddress", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "b24e0d18-bd77-4847-a910-68f12365f22d", 0, "cadae836-6f6a-4528-8df8-60583148cdc0", "admin@admin.com", true, "admin", "admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEEqMOKFKcRWBFpuNLlrgNu9ZnHtkzrRSA6hlD8ZhFEdUgpKXLYbit4s/XYeEOOaH+g==", null, false, "3deaf4f0-d012-4336-8d04-a528631d51af", "123 Infinity Way", false, "admin@admin.com" },
-                    { "90515c99-1eb1-48e7-998b-6d7020fd4625", 0, "5df2123f-8fb6-4796-a7ef-ee71a52388db", "ladyface@faces.com", true, "April", "AwesomeLastName", false, null, "LADYFACE@FACES.COM", "LADYFACE@FACES.COM", "AQAAAAEAACcQAAAAENdWfEdIOVigUA8tqUHUTAloZOd20hnto4tAkebs+3USsfFQrychJ6GZieBcnFid6w==", null, false, "370137c2-6d91-4a5c-8f27-82906161c615", "123 New Way", false, "LadyFace@Faces.com" }
+                    { "44a6ba84-0009-4a43-86f8-ce5a087a10c4", 0, "2a9bcd42-959c-436c-aee8-bf8ccbd2e8cf", "admin@admin.com", true, "admin", "admin", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEB8fDG8PlT4q2sBa0XdA3+l6wFlvesgmSNOE2i74vpDrACAB0BZrSmyjzCGt7blAVQ==", null, false, "5153c12c-9f6c-4552-b673-41bc0d3d34c1", "123 Infinity Way", false, "admin@admin.com" },
+                    { "d2ef1916-d390-4241-a54e-5b5639998d72", 0, "9be0f68a-4239-4f78-8bd4-564ee9703ff5", "ladyface@faces.com", true, "April", "AwesomeLastName", false, null, "LADYFACE@FACES.COM", "LADYFACE@FACES.COM", "AQAAAAEAACcQAAAAEDMEqkBtTpqRZRk8hN8JsVgJXKU3zrkHVm4+GrqmAuoXtqf92lHkoBtiMrdzrTSRJQ==", null, false, "b7be34b1-f4d6-4e31-8925-e776b941cf8a", "123 New Way", false, "LadyFace@Faces.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -304,8 +303,8 @@ namespace Bangazon.Migrations
                 columns: new[] { "OrderId", "ApplicationUserId", "DateCompleted", "DateCreated", "PaymentTypeId" },
                 values: new object[,]
                 {
-                    { 5, "b24e0d18-bd77-4847-a910-68f12365f22d", null, new DateTime(2018, 10, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
-                    { 4, "90515c99-1eb1-48e7-998b-6d7020fd4625", null, new DateTime(2018, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null }
+                    { 5, "44a6ba84-0009-4a43-86f8-ce5a087a10c4", null, new DateTime(2018, 10, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
+                    { 4, "d2ef1916-d390-4241-a54e-5b5639998d72", null, new DateTime(2018, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null }
                 });
 
             migrationBuilder.InsertData(
@@ -313,24 +312,24 @@ namespace Bangazon.Migrations
                 columns: new[] { "PaymentTypeId", "AccountNumber", "ApplicationUserId", "DateCreated", "Description", "IsActive" },
                 values: new object[,]
                 {
-                    { 1, "86753095551212", "b24e0d18-bd77-4847-a910-68f12365f22d", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "American Express", true },
-                    { 2, "4102948572991", "b24e0d18-bd77-4847-a910-68f12365f22d", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover", true },
-                    { 3, "9992948572991", "90515c99-1eb1-48e7-998b-6d7020fd4625", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover", true }
+                    { 1, "86753095551212", "44a6ba84-0009-4a43-86f8-ce5a087a10c4", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "American Express", true },
+                    { 2, "4102948572991", "44a6ba84-0009-4a43-86f8-ce5a087a10c4", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover", true },
+                    { 3, "9992948572991", "d2ef1916-d390-4241-a54e-5b5639998d72", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover", true }
                 });
 
             migrationBuilder.InsertData(
                 table: "Product",
-                columns: new[] { "ProductId", "ApplicationUserId", "City", "DateCreated", "Description", "IsLocal", "Price", "ProductTypeId", "Quantity", "Title" },
+                columns: new[] { "ProductId", "ApplicationUserId", "City", "DateCreated", "Description", "Price", "ProductTypeId", "Quantity", "Title" },
                 values: new object[,]
                 {
-                    { 1, "b24e0d18-bd77-4847-a910-68f12365f22d", "Poop Town", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 1", false, 10.0, 1, 3, "Product 1" },
-                    { 5, "b24e0d18-bd77-4847-a910-68f12365f22d", "Chicago", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 5", false, 50.0, 1, 34, "Product 5" },
-                    { 2, "b24e0d18-bd77-4847-a910-68f12365f22d", "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 2", false, 20.0, 2, 123, "Product 2" },
-                    { 6, "90515c99-1eb1-48e7-998b-6d7020fd4625", "San Diego", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 6", false, 60.0, 2, 87, "Product 6" },
-                    { 3, "b24e0d18-bd77-4847-a910-68f12365f22d", "Poop Town", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 3", false, 30.0, 3, 754, "Product 3" },
-                    { 7, "90515c99-1eb1-48e7-998b-6d7020fd4625", "Denver", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 7", false, 70.0, 3, 7, "Product 7" },
-                    { 4, "b24e0d18-bd77-4847-a910-68f12365f22d", "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 4", false, 10.0, 4, 5, "Product 4" },
-                    { 8, "90515c99-1eb1-48e7-998b-6d7020fd4625", "Los Angeles", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 8", false, 80.0, 4, 10, "Product 8" }
+                    { 1, "44a6ba84-0009-4a43-86f8-ce5a087a10c4", "Poop Town", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 1", 10.0, 1, 3, "Product 1" },
+                    { 5, "44a6ba84-0009-4a43-86f8-ce5a087a10c4", "Chicago", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 5", 50.0, 1, 34, "Product 5" },
+                    { 2, "44a6ba84-0009-4a43-86f8-ce5a087a10c4", "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 2", 20.0, 2, 123, "Product 2" },
+                    { 6, "d2ef1916-d390-4241-a54e-5b5639998d72", "San Diego", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 6", 60.0, 2, 87, "Product 6" },
+                    { 3, "44a6ba84-0009-4a43-86f8-ce5a087a10c4", "Poop Town", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 3", 30.0, 3, 754, "Product 3" },
+                    { 7, "d2ef1916-d390-4241-a54e-5b5639998d72", "Denver", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 7", 70.0, 3, 7, "Product 7" },
+                    { 4, "44a6ba84-0009-4a43-86f8-ce5a087a10c4", "Nashville", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 4", 10.0, 4, 5, "Product 4" },
+                    { 8, "d2ef1916-d390-4241-a54e-5b5639998d72", "Los Angeles", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Description of product 8", 80.0, 4, 10, "Product 8" }
                 });
 
             migrationBuilder.InsertData(
@@ -338,9 +337,9 @@ namespace Bangazon.Migrations
                 columns: new[] { "OrderId", "ApplicationUserId", "DateCompleted", "DateCreated", "PaymentTypeId" },
                 values: new object[,]
                 {
-                    { 1, "b24e0d18-bd77-4847-a910-68f12365f22d", new DateTime(2018, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2018, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 3, "b24e0d18-bd77-4847-a910-68f12365f22d", new DateTime(2017, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2016, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 },
-                    { 2, "90515c99-1eb1-48e7-998b-6d7020fd4625", new DateTime(2018, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2017, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 }
+                    { 1, "44a6ba84-0009-4a43-86f8-ce5a087a10c4", new DateTime(2018, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2018, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 3, "44a6ba84-0009-4a43-86f8-ce5a087a10c4", new DateTime(2017, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2016, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 2, "d2ef1916-d390-4241-a54e-5b5639998d72", new DateTime(2018, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2017, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 }
                 });
 
             migrationBuilder.InsertData(

@@ -42,8 +42,11 @@
                     }
                     <li><a asp-area="" asp-controller="Products" asp-action="Index">Products</a></li>
                     <li><a asp-area="" asp-controller="Products" asp-action="Types">Product Categories</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">View Cart</a></li>
-                </ul>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li><a asp-area="" asp-controller="Orders" asp-action="ShoppingCart">View Cart</a></li>
+                    }
+                    </ul>
                 <partial name="_LoginPartial" />
             </div>
         </div>
