@@ -92,6 +92,43 @@ namespace Bangazon.Controllers
         }
 
         [Authorize]
+        [HttpPost, ActionName("AddToCart")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddToCart(int productId)
+        {
+            ApplicationUser curUser = await GetCurrentUserAsync();
+
+            Order openOrder = await _context.Order
+                .Where(x => x.ApplicationUserId == curUser.Id && x.PaymentTypeId == null).FirstOrDefaultAsync();
+
+            if (openOrder != null)
+            {
+                OrderProduct orderToAdd = new OrderProduct { OrderId = openOrder.OrderId, ProductId = productId };
+                _context.Add(orderToAdd);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index","Home");
+
+            }
+            else
+            {
+                Order newOrder = new Order { ApplicationUserId = curUser.Id };
+                _context.Add(newOrder);
+                await _context.SaveChangesAsync();
+
+                Order justCreatedOrder = await _context.Order
+                .Where(x => x.ApplicationUserId == curUser.Id && x.PaymentTypeId == null).FirstOrDefaultAsync();
+
+                OrderProduct orderToAdd = new OrderProduct { OrderId = justCreatedOrder.OrderId, ProductId = productId };
+                _context.Add(orderToAdd);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+
+           
+            return RedirectToAction(nameof(ShoppingCart));
+        }
+
+        [Authorize]
         [HttpPost, ActionName("RemoveFromCart")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveFromCart(int? ProductId, int? OrderId)
