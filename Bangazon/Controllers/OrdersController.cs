@@ -9,6 +9,7 @@ using Bangazon.Data;
 using Bangazon.Models;
 using Bangazon.Models.OrderViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bangazon.Controllers
 {
@@ -53,6 +54,7 @@ namespace Bangazon.Controllers
             return View(order);
         }
 
+        [Authorize]
         public async Task<IActionResult> ShoppingCart()
         {
 
@@ -60,7 +62,7 @@ namespace Bangazon.Controllers
 
             if (curUser == null)
             {
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
 
             OrderDetailViewModel shoppingCart = new OrderDetailViewModel();
@@ -73,30 +75,33 @@ namespace Bangazon.Controllers
 
             shoppingCart.LineItems =
                 from op in _context.OrderProduct
-                 join p in _context.Product
-                 on op.ProductId equals p.ProductId
-                 where op.OrderId == shoppingCart.Order.OrderId
-                 group new { p, op } by p into pList
-                 select new OrderLineItem()
-                 {
-                     Product = pList.Key,
-                     Units = pList.Select(x => x.p.ProductId).Count(),
-                     Cost = pList.Select(x => x.p.ProductId).Count() * pList.Key.Price,
-                     orderProducts = pList.Select(x => x.op).ToList()
-                 } 
+                join p in _context.Product
+                on op.ProductId equals p.ProductId
+                where op.OrderId == shoppingCart.Order.OrderId
+                group new { p, op } by p into pList
+                select new OrderLineItem()
+                {
+                    Product = pList.Key,
+                    Units = pList.Select(x => x.p.ProductId).Count(),
+                    Cost = pList.Select(x => x.p.ProductId).Count() * pList.Key.Price,
+                    orderProducts = pList.Select(x => x.op).ToList()
+                }
                  ;
 
             return View(shoppingCart);
         }
 
+        [Authorize]
         [HttpPost, ActionName("RemoveFromCart")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveFromCart(List<OrderProduct> orderProducts)
+        public async Task<IActionResult> RemoveFromCart(int? ProductId, int? OrderId)
         {
-            foreach (OrderProduct op in orderProducts)
+          
+            List<OrderProduct> opsToRemove = await _context.OrderProduct.Where(x => x.ProductId == ProductId && x.OrderId == OrderId).ToListAsync();
+            foreach (OrderProduct op in opsToRemove)
             {
                 _context.OrderProduct.Remove(op);
-            }
+            }  
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ShoppingCart));

@@ -43,9 +43,9 @@
             <td>
                 <form asp-action="RemoveFromCart">
                     <div class="form-group">
-                        <input type="hidden" asp-for="@item.orderProducts" />
-       
-                            <input type="submit" value="Remove" class="btn btn-default" />
+                        <input type="hidden" name="ProductId" asp-for="@item.Product.ProductId" />
+                        <input type="hidden" name="OrderId" asp-for="@Model.Order.OrderId" />
+                        <input type="submit" value="Remove" class="btn btn-default" />
                     </div>
                 </form>
             </td>
